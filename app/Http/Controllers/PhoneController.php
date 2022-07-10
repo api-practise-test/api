@@ -47,6 +47,45 @@ class PhoneController extends Controller
 //        return response()->json(['message' => 'Phone creates successfully!!']);
     }
 
+    public function updatePhone(Request $request, $phone) {
+        $request->validate([
+            'phone' => 'required|max:255',
+            'description' => 'required',
+            'price' => 'required|number',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        try {
+            $phone = Phone::find($phone);
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $name = time() . '_' . $file->getClientOriginalName();
+                $destinationPath = public_path('images');
+                $file->move($destinationPath, $name);
+
+
+                if(file_exists('/images/'. $phone->image)) {
+                    unlink('/images/' . $phone->image);
+                }
+                $phone->image = $name;
+
+            }
+            $phone->phone = $request->phone;
+            $phone->description = $request->description;
+            $phone->price = $request->price;
+            $phone->brand_id = $request->brand_id;
+
+            return response()->json([
+                'message' => 'Phone Updated Successfully!!'
+            ]);
+
+        }catch(\Exceoption $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function deletePhone($id)
     {
 
