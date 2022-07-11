@@ -24,13 +24,13 @@ class PhoneController extends Controller
 //        $newPhone->image = 'uyen';
 //        $newPhone->save();
 
-//        $request->validate([
-//            'phone' => 'required|max:255',
-//            'description' => 'required',
-//            'price' => 'required|number',
-//            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-//        ]);
-//
+        $request->validate([
+            'phone' => 'required|max:255',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
         $file = $request->file('image');
         $name = time() . '_' . $file->getClientOriginalName();
         $destinationPath = public_path('images');
@@ -44,14 +44,14 @@ class PhoneController extends Controller
         $newPhone->image = $name;
         $newPhone->save();
 
-//        return response()->json(['message' => 'Phone creates successfully!!']);
+        return response()->json(['message' => 'Phone creates successfully!!']);
     }
 
     public function updatePhone(Request $request, $phone) {
         $request->validate([
             'phone' => 'required|max:255',
             'description' => 'required',
-            'price' => 'required|number',
+            'price' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -88,6 +88,28 @@ class PhoneController extends Controller
 
     public function deletePhone($id)
     {
+        $phone = Phone::find($id)->delete();
+
+        try {
+
+            if($phone->image){
+                if(file_exists('/images/'. $phone->image)) {
+                    unlink('/images/' . $phone->image);
+                }
+            }
+
+            $phone->delete();
+
+            return response()->json([
+                'message'=>'Phone Deleted Successfully!!'
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json([
+                'message'=>'Something goes wrong while deleting a phone!!'
+            ]);
+        }
 
     }
 

@@ -26,7 +26,8 @@ Route::get('/phones', [\App\Http\Controllers\PhoneController::class, 'getPhones'
 Route::get('/get-phones-by-keyword', [\App\Http\Controllers\PhoneController::class, 'getPhonesByKeyword']);
 
 Route::post('/phones',[\App\Http\Controllers\PhoneController::class, 'postPhone']);
-Route::delete('/phones/{id}',[\App\Http\Controllers\PhoneController::class, 'deletePhone']);
+Route::post('/phones/{id}',[\App\Http\Controllers\PhoneController::class, 'updatePhone']);
 
+Route::delete('/phones/{id}',[\App\Http\Controllers\PhoneController::class, 'deletePhone']);
 
 Route::get('/brands', [\App\Http\Controllers\BrandController::class, 'getBrands']);
