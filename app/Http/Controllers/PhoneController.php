@@ -16,13 +16,7 @@ class PhoneController extends Controller
 
     public function postPhone(Request $request)
     {
-//        $newPhone = new Phone();
-//        $newPhone->phone = $request->phone;
-//        $newPhone->description = $request->description;
-//        $newPhone->price = $request->price;
-//        $newPhone->brand_id = $request->brand_id;
-//        $newPhone->image = 'uyen';
-//        $newPhone->save();
+
 
         $request->validate([
             'phone' => 'required|max:255',
