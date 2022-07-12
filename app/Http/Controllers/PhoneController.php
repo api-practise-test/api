@@ -80,6 +80,15 @@ class PhoneController extends Controller
         }
     }
 
+    public function detailPage($id) {
+        $phone = Phone::with('brand')->find($id);
+
+        return response()->json([
+            'message' => "successfully!!",
+            'data' => $phone
+        ]);
+    }
+
     public function deletePhone($id)
     {
         $phone = Phone::find($id)->delete();
