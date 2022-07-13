@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Phone;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
@@ -121,6 +122,19 @@ class PhoneController extends Controller
         $keyword = $request->keyword ?? "iPhone";
         return Phone::with('brand')
             ->where('phone', 'like', "%$keyword%")
+            ->orWhere('price', 'like', "%$keyword%")
             ->get();
+    }
+
+
+
+    public function getBrandByAmount(Request $request) {
+
+        $amount1 = Phone::with('brand')
+            ->where('id','<=', '1')->get()->count();
+        $amount2 = Phone::with('brand')
+            ->where('id','<=', '1')->get()->count();
+        $amount1 = Phone::with('brand')
+            ->where('id','<=', '1')->get()->count();
     }
 }

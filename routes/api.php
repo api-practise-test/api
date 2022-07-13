@@ -24,6 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/phones', [\App\Http\Controllers\PhoneController::class, 'getPhones']);
 Route::get('/get-phones-by-keyword', [\App\Http\Controllers\PhoneController::class, 'getPhonesByKeyword']);
+Route::get('/get-phones-by-price', [\App\Http\Controllers\PhoneController::class, 'getPhonesByPrice']);
+Route::get('/get-brand-by-amount', [\App\Http\Controllers\PhoneController::class, 'getBrandByAmount']);
 
 Route::post('/phones',[\App\Http\Controllers\PhoneController::class, 'postPhone']);
 Route::post('/phones/{id}',[\App\Http\Controllers\PhoneController::class, 'updatePhone']);
